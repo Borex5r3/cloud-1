@@ -1,0 +1,4 @@
+---
+- name: Remove Docker and related packages
+
+- name: Remove Docker data directory

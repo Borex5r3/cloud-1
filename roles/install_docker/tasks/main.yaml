@@ -1,0 +1,70 @@
+---
+#- name: Install Docker dependencies
+
+#- name: Add Docker GPG key
+
+#   - name: Add Docker repository
+
+#   - name: Install Docker and Docker Compose
+
+#   - name: Start Docker service
+
+#   - name: Add user to docker group
+    
+#   - name: Download Docker Compose
+
+- name: Install full Python3 environment (includes distutils)
+  become: yes
+  apt:
+    name: python3-full
+    state: present
+    update_cache: yes
+
+
+- name: Install Docker dependencies
+  apt:
+    name: "{{ docker_deps }}"
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG key
+  apt_key:
+    url: "{{ docker_gpg_key }}"
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_repo }}"
+    state: present
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: Create Docker CLI plugins directory
+  file:
+    path: /usr/libexec/docker/cli-plugins
+    state: directory
+    mode: '0755'
+
+- name: Install Docker Compose CLI plugin
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ compose_version }}/docker-compose-linux-x86_64"
+    dest: /usr/libexec/docker/cli-plugins/docker-compose
+    mode: '0755'
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes

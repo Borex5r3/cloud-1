@@ -1,0 +1,14 @@
+---
+- name: Run my roles
+  hosts: Cloud1
+  become: yes
+  roles:
+    - install_docker
+    - run_app
+    #- run_database
+    #- run_phpmyadmin
+    #- word_press
+    #- nginx
+    #- down_app
+    #- uninstall_docker
+    #- restart_conatiner

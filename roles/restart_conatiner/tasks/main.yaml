@@ -1,0 +1,5 @@
+- name: restart app
+  shell: >
+    docker compose -f /app/docker-compose.yaml restart {{ ct }}
+  args:
+    chdir: /app

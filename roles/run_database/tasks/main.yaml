@@ -1,0 +1,5 @@
+- name: Create app directory
+
+- name: Copy files to the compose app directory
+
+- name: Run Database From Docker Compose
