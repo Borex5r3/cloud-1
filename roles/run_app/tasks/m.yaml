@@ -1,0 +1,62 @@
+
+#    - name: Create app directory
+
+#    - name: Copy files to the compose app directory
+
+#    - name: Create startup script
+
+#    - name: Add startup script to root crontab
+    
+#    - name: Run the compose app
+
+---
+#- name: Install nginx (in case it's not installed yet)
+#  apt:
+#    name: nginx
+#    state: present
+#    update_cache: yes
+#  become: true
+
+#- name: Ensure nginx conf.d directory exists
+#  file:
+#    path: /etc/nginx/conf.d
+#    state: directory
+#    mode: '0755'
+#  become: true
+
+- name: Create app directory
+  file:
+    path: "/home/{{ ansible_user }}/Desktop/app"
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.yaml to the app directory
+  copy:
+    src: files/wordpress_role/docker-compose.yaml
+    dest: /home/{{ ansible_user }}/Desktop/app/docker-compose.yaml
+    mode: '0644'
+
+- name: Copy nginx config to the nginx conf.d directory
+  copy:
+    src: files/wordpress_role/nginx/conf.d/wordpress.conf
+    dest: /etc/nginx/conf.d/wordpress.conf
+    mode: '0644'
+
+- name: Copy .env file to the app directory
+  copy:
+    src: files/wordpress_role/.env
+    dest: /home/{{ ansible_user }}/Desktop/.env
+    mode: '0644'
+
+- name: Run the compose app
+  command: docker-compose -f /home/{{ ansible_user }}/Desktop/docker-compose.yaml up -d
+  args:
+    chdir: /home/{{ ansible_user }}/Desktop
+
+- name: Restart nginx service to apply new config
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+

@@ -1,42 +1,46 @@
+- name: Ensure data directories exist for Docker volumes
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /home/{{ ansible_user }}/data/mariadb
+    - /home/{{ ansible_user }}/data/wordpress
 
-#    - name: Create app directory
-
-#    - name: Copy files to the compose app directory
-
-#    - name: Create startup script
-
-#    - name: Add startup script to root crontab
-    
-#    - name: Run the compose app
-
----
 - name: Create app directory
   file:
     path: "/home/{{ ansible_user }}/Desktop/app"
     state: directory
     mode: '0755'
 
-- name: Copy docker-compose.yaml to the app directory
+- name: Copy Makefile to app directory
   copy:
-    src: files/wordpress_role/docker-compose.yaml
-    dest: /home/{{ ansible_user }}/Desktop/docker-compose.yaml
+    src: files/wordpress_role/Makefile
+    dest: /home/{{ ansible_user }}/Desktop/app/Makefile
     mode: '0644'
 
-- name: Copy nginx config to the nginx conf.d directory
+- name: Copy srcs directory to app directory
   copy:
-    src: files/wordpress_role/nginx/conf.d/wordpress.conf
-    dest: /etc/nginx/conf.d/wordpress.conf
+    src: files/wordpress_role/srcs/
+    dest: /home/{{ ansible_user }}/Desktop/app/srcs/
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: true
+
+- name: Copy .env file to app directory
+  copy:
+    src: files/wordpress_role/srcs/.env
+    dest: /home/{{ ansible_user }}/Desktop/.env
     mode: '0644'
 
-- name: Run the compose app
-  command: docker-compose -f /home/{{ ansible_user }}/Desktop/docker-compose.yaml up -d
+- name: Run the Makefile to start the app
+  command: make
   args:
-    chdir: /home/{{ ansible_user }}/Desktop
+    chdir: /home/{{ ansible_user }}/Desktop/app
 
 - name: Restart nginx service to apply new config
   service:
     name: nginx
     state: restarted
     enabled: yes
-
-

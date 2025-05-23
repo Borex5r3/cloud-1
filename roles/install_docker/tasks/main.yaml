@@ -1,18 +1,4 @@
 ---
-#- name: Install Docker dependencies
-
-#- name: Add Docker GPG key
-
-#   - name: Add Docker repository
-
-#   - name: Install Docker and Docker Compose
-
-#   - name: Start Docker service
-
-#   - name: Add user to docker group
-    
-#   - name: Download Docker Compose
-
 - name: Install full Python3 environment (includes distutils)
   become: yes
   apt:

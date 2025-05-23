@@ -1,4 +1,20 @@
 ---
 - name: Remove Docker and related packages
+  apt:
+    name:
+      - docker
+      - docker.io
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: absent
+    purge: yes
+    autoremove: yes
+  ignore_errors: yes
 
 - name: Remove Docker data directory
+  file:
+    path: /var/lib/docker
+    state: absent
+  ignore_errors: yes

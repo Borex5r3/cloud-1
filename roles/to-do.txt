@@ -1,0 +1,7 @@
+samaykom
+
+
+add PHP-mydamin
+add roles
+create VM and try to deploy the app using just SSH and ansible
+add launch.sh to start ansible in VM
