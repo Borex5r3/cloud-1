@@ -1,0 +1,7 @@
+- name: Install make utility
+  become: yes
+  apt:
+    name: make
+    state: present
+    update_cache: yes
+

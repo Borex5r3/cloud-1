@@ -38,7 +38,7 @@ services:
       - db-volume:/var/lib/mysql
     init: true
     restart: on-failure
-  
+
   wordpress:
     build:
       context: .
@@ -52,6 +52,20 @@ services:
     volumes:
       - wp-volume:/var/www/
     init: true
+    restart: on-failure
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - mariadb
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+    ports:
+      - "8080:80"
+    networks:
+      - inception
     restart: on-failure
 
 volumes:
@@ -68,5 +82,5 @@ volumes:
       device: /home/${USER}/data/mariadb
 
 networks:
-    inception:
-        driver: bridge
+  inception:
+    driver: bridge

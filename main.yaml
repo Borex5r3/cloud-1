@@ -4,6 +4,8 @@
   become: yes
   roles:
     - install_docker
+    - install_make
+    - nginx
     - run_app
     #- run_database
     #- run_phpmyadmin

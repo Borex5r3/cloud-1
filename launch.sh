@@ -27,5 +27,5 @@ fi
 
 # Run the Ansible playbook
 echo -e "${GREEN}[INFO] Running Ansible playbook...${RESET}"
-ansible-playbook -i inventory.ini main.yml --ask-become-pass
+ansible-playbook -i inventory.ini main.yaml --ask-become-pass
 
