@@ -19,17 +19,23 @@
     dest: /home/{{ ansible_user }}/Desktop/app/Makefile
     mode: '0644'
 
-- name: Copy srcs directory to app directory
-  copy:
-    src: files/wordpress_role/srcs/
-    dest: /home/{{ ansible_user }}/Desktop/app/srcs/
+- name: Create app srcs and requirements directories
+  file:
+    path: "/home/{{ ansible_user }}/Desktop/app/{{ item }}"
+    state: directory
     mode: '0755'
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-  become: true
+  loop:
+    - srcs
+    - srcs/requirements
+
+- name: Copy .env file to app directory
+  copy:
+    src: files/wordpress_role/srcs/docker-compose.yml
+    dest: /home/{{ ansible_user }}/Desktop/app/srcs/docker-compose.yml
+    mode: '0644'
 
 - name: Copy .env file to app directory
   copy:
     src: files/wordpress_role/srcs/.env
-    dest: /home/{{ ansible_user }}/Desktop/.env
+    dest: /home/{{ ansible_user }}/Desktop/app/srcs/.env
     mode: '0644'

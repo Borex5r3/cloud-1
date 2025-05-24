@@ -9,6 +9,9 @@
     - install_nginx
     - deploy_ssl
     - setup_app
+    - setup_database
+    - setup_nginx
+    - setup_wordpress
     - run_app
     #- clean_app
     #- uninstall_docker

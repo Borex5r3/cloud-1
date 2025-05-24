@@ -2,9 +2,3 @@
   command: make
   args:
     chdir: /home/{{ ansible_user }}/Desktop/app
-
-- name: Restart nginx service to apply new config
-  service:
-    name: nginx
-    state: restarted
-    enabled: yes

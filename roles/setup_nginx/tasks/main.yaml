@@ -1,0 +1,9 @@
+---
+- name: Copy srcs directory to app directory
+  copy:
+    src: files/nginx
+    dest: /home/{{ ansible_user }}/Desktop/app/srcs/requirements/
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: true
