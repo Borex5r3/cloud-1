@@ -1,5 +1,0 @@
-- name: Run WordPress From Makefile
-  shell: >
-    make
-  args:
-    chdir: /app
