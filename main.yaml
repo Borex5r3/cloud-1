@@ -10,9 +10,6 @@
     - deploy_ssl
     - setup_app
     - run_app
-    #- run_database
-    #- run_phpmyadmin
-    #- word_press
     #- clean_app
     #- uninstall_docker
     #- restart_conatiner
