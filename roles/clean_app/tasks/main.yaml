@@ -1,5 +1,5 @@
-- name: restart app
+- name: clean app
   shell: >
-    make re
+    make clean
   args:
     chdir: /app

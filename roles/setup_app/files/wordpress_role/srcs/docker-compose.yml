@@ -17,7 +17,7 @@ services:
       - ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www/
     init: true
-    restart: on-failure
+    restart: always
 
   mariadb:
     build:
@@ -37,7 +37,7 @@ services:
     volumes:
       - db-volume:/var/lib/mysql
     init: true
-    restart: on-failure
+    restart: always
 
   wordpress:
     build:
@@ -52,7 +52,7 @@ services:
     volumes:
       - wp-volume:/var/www/
     init: true
-    restart: on-failure
+    restart: always
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -66,7 +66,7 @@ services:
       - "8080:80"
     networks:
       - inception
-    restart: on-failure
+    restart: always
 
 volumes:
   wp-volume:

@@ -1,0 +1,35 @@
+- name: Ensure data directories exist for Docker volumes
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /home/{{ ansible_user }}/data/mariadb
+    - /home/{{ ansible_user }}/data/wordpress
+
+- name: Create app directory
+  file:
+    path: "/home/{{ ansible_user }}/Desktop/app"
+    state: directory
+    mode: '0755'
+
+- name: Copy Makefile to app directory
+  copy:
+    src: files/wordpress_role/Makefile
+    dest: /home/{{ ansible_user }}/Desktop/app/Makefile
+    mode: '0644'
+
+- name: Copy srcs directory to app directory
+  copy:
+    src: files/wordpress_role/srcs/
+    dest: /home/{{ ansible_user }}/Desktop/app/srcs/
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: true
+
+- name: Copy .env file to app directory
+  copy:
+    src: files/wordpress_role/srcs/.env
+    dest: /home/{{ ansible_user }}/Desktop/.env
+    mode: '0644'

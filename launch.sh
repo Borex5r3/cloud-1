@@ -8,6 +8,19 @@ GREEN="\e[32m"
 RED="\e[31m"
 RESET="\e[0m"
 
+# Remove old SSH known_hosts entry to avoid host key verification errors
+KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
+SSH_HOST="[127.0.0.1]:2222"
+
+if [ -f "$KNOWN_HOSTS_FILE" ]; then
+    echo -e "${GREEN}[INFO] Removing old SSH key for $SSH_HOST from known_hosts...${RESET}"
+    ssh-keygen -f "$KNOWN_HOSTS_FILE" -R "$SSH_HOST" >/dev/null 2>&1 || {
+        echo -e "${RED}[WARNING] Could not remove old SSH key entry.${RESET}"
+    }
+else
+    echo -e "${GREEN}[INFO] No known_hosts file found, skipping SSH key removal.${RESET}"
+fi
+
 # Check if Ansible is installed
 if ! command -v ansible-playbook &> /dev/null; then
     echo -e "${GREEN}[INFO] Ansible not found. Installing...${RESET}"

@@ -1,0 +1,9 @@
+---
+- name: Install Python3 and distutils
+  become: yes
+  apt:
+    name:
+      - python3
+      - python3-distutils
+    state: present
+    update_cache: yes

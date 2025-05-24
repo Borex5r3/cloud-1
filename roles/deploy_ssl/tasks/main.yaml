@@ -1,0 +1,24 @@
+- name: Copy SSL certificate to system location
+  copy:
+    src: tools/adbaich.42.fr.pem
+    dest: /etc/ssl/certs/adbaich.42.fr.crt
+    mode: '0644'
+  become: true
+
+- name: Copy private key to system location
+  copy:
+    src: tools/adbaich.42.fr.key.pem
+    dest: /etc/ssl/private/adbaich.42.fr.key
+    mode: '0600'
+  become: true
+
+- name: Copy cert to trusted CA store
+  copy:
+    src: tools/adbaich.42.fr.pem
+    dest: /usr/local/share/ca-certificates/adbaich.crt
+    mode: '0644'
+  become: true
+
+- name: Update system's trusted certificates
+  command: update-ca-certificates
+  become: true

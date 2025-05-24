@@ -3,14 +3,16 @@
   hosts: Cloud1
   become: yes
   roles:
+    - install_python
     - install_docker
     - install_make
-    - nginx
+    - install_nginx
+    - deploy_ssl
+    - setup_app
     - run_app
     #- run_database
     #- run_phpmyadmin
     #- word_press
-    #- nginx
-    #- down_app
+    #- clean_app
     #- uninstall_docker
     #- restart_conatiner
